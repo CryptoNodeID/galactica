@@ -65,8 +65,9 @@ fi
 sudo apt -qy install curl git jq lz4 build-essential unzip tar
 
 #Prepare Validator Data
-read -p "Enter identity (leave blank for default 'CryptoNodeID'): " VALIDATOR_KEY_NAME
+read -p "Enter validator name (leave blank for default 'CryptoNodeID'): " VALIDATOR_KEY_NAME
 VALIDATOR_KEY_NAME=${VALIDATOR_KEY_NAME:-"CryptoNodeID"}
+echo "Get your identity by following this steps: https://docs.harmony.one/home/network/validators/managing-a-validator/adding-a-validator-logo"
 read -p "Enter identity (leave blank for default '4a8bc33cee42de0b23bbccbc84aee10fd0cdfc07'): " INPUT_IDENTITY
 INPUT_IDENTITY=${INPUT_IDENTITY:-"4a8bc33cee42de0b23bbccbc84aee10fd0cdfc07"}
 read -p "Enter website (leave blank for default 'https://cryptonode.id'): " INPUT_WEBSITE
