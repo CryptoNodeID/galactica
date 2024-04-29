@@ -11,7 +11,7 @@ SEEDS="c722e6dc5f762b0ef19be7f8cc8fd67cdf988946@seed01-reticulum.galactica.com:2
 DENOM='agnet'
 REPO="https://github.com/Galactica-corp/galactica.git"
 REPO_DIR="galactica"
-BRANCH="master"
+BRANCH="v0.1.2"
 GOPATH=$HOME/go
 
 #Prerequisites
