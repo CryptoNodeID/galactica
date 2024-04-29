@@ -148,7 +148,7 @@ sed -i.bak \
     -e "s/^[[:space:]]*persistent_peers *=.*/persistent_peers = \"${PEERS}\"/" \
     ${DAEMON_HOME}/config/config.toml
 
-sed -i 's/minimum-gas-prices = "0stake"/minimum-gas-prices = "0.005uside"/' ${DAEMON_HOME}/config/app.toml
+sed -i 's/minimum-gas-prices *=.*/minimum-gas-prices = "100'$DENOM'"/' ${DAEMON_HOME}/config/app.toml
 sed -i \
   -e 's|^[[:space:]]*pruning *=.*|pruning = "custom"|' \
   -e 's|^[[:space:]]*pruning-keep-recent *=.*|pruning-keep-recent = "100"|' \
