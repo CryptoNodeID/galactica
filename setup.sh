@@ -34,8 +34,8 @@ fi
 if ! grep -q "export DAEMON_HOME=${DAEMON_HOME}" $HOME/.profile; then
     echo "export DAEMON_HOME=${DAEMON_HOME}" >> $HOME/.profile
 fi
-if ! grep -q "export DAEMON_RESTART_AFTER_UPGRADE=true" $HOME/.profile; then
-    echo "export DAEMON_RESTART_AFTER_UPGRADE=true" >> $HOME/.profile
+if ! grep -q "export DAEMON_RESTART_AFTER_UPGRADE=false" $HOME/.profile; then
+    echo "export DAEMON_RESTART_AFTER_UPGRADE=false" >> $HOME/.profile
 fi
 if ! grep -q "export DAEMON_ALLOW_DOWNLOAD_BINARIES=false" $HOME/.profile; then
     echo "export DAEMON_ALLOW_DOWNLOAD_BINARIES=false" >> $HOME/.profile
@@ -261,7 +261,7 @@ LimitNOFILE=infinity
 
 Environment="DAEMON_NAME=${DAEMON_NAME}"
 Environment="DAEMON_HOME=${DAEMON_HOME}"
-Environment="DAEMON_RESTART_AFTER_UPGRADE=true"
+Environment="DAEMON_RESTART_AFTER_UPGRADE=false"
 Environment="DAEMON_ALLOW_DOWNLOAD_BINARIES=false"
 
 [Install]
