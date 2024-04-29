@@ -37,8 +37,8 @@ fi
 if ! grep -q "export DAEMON_RESTART_AFTER_UPGRADE=false" $HOME/.profile; then
     echo "export DAEMON_RESTART_AFTER_UPGRADE=false" >> $HOME/.profile
 fi
-if ! grep -q "export DAEMON_ALLOW_DOWNLOAD_BINARIES=false" $HOME/.profile; then
-    echo "export DAEMON_ALLOW_DOWNLOAD_BINARIES=false" >> $HOME/.profile
+if ! grep -q "export DAEMON_ALLOW_DOWNLOAD_BINARIES=true" $HOME/.profile; then
+    echo "export DAEMON_ALLOW_DOWNLOAD_BINARIES=true" >> $HOME/.profile
 fi
 if ! grep -q "export CHAIN_ID=${CHAIN_ID}" $HOME/.profile; then
     echo "export CHAIN_ID=${CHAIN_ID}" >> $HOME/.profile
@@ -115,6 +115,9 @@ cp $(which ${DAEMON_NAME}) ${DAEMON_HOME}/cosmovisor/genesis/bin/
 
 sudo ln -s ${DAEMON_HOME}/cosmovisor/genesis ${DAEMON_HOME}/cosmovisor/current -f
 sudo ln -s ${DAEMON_HOME}/cosmovisor/current/bin/${DAEMON_NAME} /usr/local/bin/${DAEMON_NAME} -f
+
+mkdir -p ${DAEMON_HOME}/cosmovisor/upgrades/$(${DAEMON_NAME} --home ${DAEMON_HOME} version)/bin/
+cp $(which ${DAEMON_NAME}) ${DAEMON_HOME}/cosmovisor/upgrades/$(${DAEMON_NAME} --home ${DAEMON_HOME} version)/bin/${DAEMON_NAME}
 
 read -p "Do you want to recover wallet? [y/N]: " RECOVER
 RECOVER=$(echo "${RECOVER}" | tr '[:upper:]' '[:lower:]')
@@ -262,7 +265,7 @@ LimitNOFILE=infinity
 Environment="DAEMON_NAME=${DAEMON_NAME}"
 Environment="DAEMON_HOME=${DAEMON_HOME}"
 Environment="DAEMON_RESTART_AFTER_UPGRADE=false"
-Environment="DAEMON_ALLOW_DOWNLOAD_BINARIES=false"
+Environment="DAEMON_ALLOW_DOWNLOAD_BINARIES=true"
 
 [Install]
 WantedBy=multi-user.target
