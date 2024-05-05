@@ -74,8 +74,8 @@ read -p "Enter website (leave blank for default 'https://cryptonode.id'): " INPU
 INPUT_WEBSITE=${INPUT_WEBSITE:-"https://cryptonode.id"}
 read -p "Enter your email (leave blank for default 'admin@cryptonode.id'): " INPUT_EMAIL
 INPUT_EMAIL=${INPUT_EMAIL:-"admin@cryptonode.id"}
-read -p "Enter details (leave blank for default 'CryptoNodeID. Crypto Validator Node Education Channel. Join us at https://t.me/CryptoNodeID'): " INPUT_DETAILS
-INPUT_DETAILS=${INPUT_DETAILS:-"CryptoNodeID. Crypto Validator Node Education Channel. Join us at https://t.me/CryptoNodeID"}
+read -p "Enter details (leave blank for default 'Created with CryptoNodeID helper. Crypto Validator Node Education Channel. Join us for more details at https://t.me/CryptoNodeID'): " INPUT_DETAILS
+INPUT_DETAILS=${INPUT_DETAILS:-"Created with CryptoNodeID helper. Crypto Validator Node Education Channel. Join us for more details at https://t.me/CryptoNodeID"}
 
 #Display data
 echo "DAEMON_NAME=$DAEMON_NAME"
@@ -187,13 +187,18 @@ tee delegate.sh > /dev/null <<EOF
 #!/bin/bash
 ${DAEMON_NAME} q bank balances \$(${DAEMON_NAME} keys show $VALIDATOR_KEY_NAME -a)
 
-echo "Enter the amount to delegate (in $DENOM): "
-read -r amount
-${DAEMON_NAME} tx staking delegate \$(${DAEMON_NAME} keys show $VALIDATOR_KEY_NAME -a) \\
-  --amount=\${amount}${DENOM} \\
-  --from=$VALIDATOR_KEY_NAME \\
-  --chain-id="$CHAIN_ID" \\
-  --fees="1000${DENOM}"
+while true; do
+    read -p "Enter the amount to delegate (in $DENOM, not 0): " amount
+    if [[ ! \${amount} =~ ^[0-9]+(\.[0-9]*)?$ ]] || (( 10#\${amount} == 0 )); then
+        echo "Invalid amount, please try again" >&2
+    else
+        ${DAEMON_NAME} tx staking delegate \$(${DAEMON_NAME} keys show $VALIDATOR_KEY_NAME --bech val -a) \${amount}${DENOM} \\
+        --from=$VALIDATOR_KEY_NAME \\
+        --chain-id="$CHAIN_ID" \\
+        --gas="200000" \\
+        --gas-prices="10${DENOM}"
+    fi
+done
 EOF
 chmod ug+x delegate.sh
 
